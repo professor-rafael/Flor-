@@ -1,59 +1,54 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Page Title</title>
+        <title>Flor</title>
     </head>
     <body>
         <canvas id="canv"></canvas>
 
         <script>
-var c= document.getElementById('canv');
-var w c.width = window.innerWidth;
-var h c.height = window.innerHeight;
-var $ c.getContext('2d');
+            var c = document.getElementById('canv');
+            var w = c.width = window.innerWidth;
+            var h = c.height = window.innerHeight;
+            var $ = c.getContext('2d');
 
-window.addEventListener('resize',
-function() {
-    c.width = window.innerWidth;
-    c.height = window.innerHeight;
+            window.addEventListener('resize', function() {
+                w = c.width = window.innerWidth;
+                h = c.height = window.innerHeight;
+            }, false);
 
-}, false);
+            function draw(ang, dst) {
+                var rings = 17;
+                var col = -30;
+                for (var u = 0; u < rings; u++) {
+                    var spc = Math.pow(1.3, u);
+                    var sd = spc + dst * spc;
+                    var x = w / 2 + Math.cos(ang) * sd;
+                    var y = h / 2 + Math.sin(ang) * sd;
+                    var s = sd / 10;
+                    $.fillStyle = 'hsla(' + (col * u) + ',100%, 50%, 1)';
+                    $.beginPath();
+                    $.arc(x, y, s, 0, Math.PI * 2);
+                    $.fill();
+                }
+            }
+            var a = 0;
 
-function draw(ang, dst) {
-    var rings = 17
-    var col = -30;
-    for (var u = 0; u <rings; u++) {
-        spc = Math.pow(1.3, (u))
-        sd = spc + dst * spc;
-        x = w / 2 + Math.cos(ang) * sd;
-        y = h / 2 + Math.sin(ang) * sd;
-        s = sd / 10;
-        $.fillStyle = 'hsla(' + col * (u) +
-        ',100%, 50%, 1)';
-        $.beginPath();
-        $.arc(x, y, s, 0, Math.PI * 2);
-        $.fill();
-    }
-}
-a = 0;
+            function go() {
+                $.fillStyle = 'hsla(0,0%,0%,.08)';
+                $.fillRect(0, 0, w, h);
+                a++;
+                var circs = 30;
+                var v = 0;
 
-function go() {
-    $.fillStyle = 'hsla(0,0%,0%,.08)'; 
-    $.fillRect(0, 0, w, h);
-    a++;
-    var circs = 30;
-    var v = 0;
-
-    for (var i = 0; i < circs; i++) {
-        ang = a / 100 + i / circs * Math.PI *
-2;
-        dst = v + (Math.sin(3 * i / circs + Math.PI * 2) + 1 + Math.cos(a / 15 + 2 * i / circs * Math.PI * 12) + 1) / 2; 
-        draw(ang, dst);
-        }
-window.requestAnimationFrame(go);
-    }
-go()
-
+                for (var i = 0; i < circs; i++) {
+                    var ang = a / 100 + i / circs * Math.PI * 2;
+                    var dst = v + (Math.sin(3 * i / circs + Math.PI * 2) + 1 + Math.cos(a / 15 + 2 * i / circs * Math.PI * 12) + 1) / 2;
+                    draw(ang, dst);
+                }
+                window.requestAnimationFrame(go);
+            }
+            go();
         </script>
     </body>
 </html>
